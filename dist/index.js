@@ -8130,7 +8130,7 @@ try {
 
   console.log(`[*] Getting ${githubRepository}\'s GitHub repository`);
   console.log(`[*] Getting ${githubToken}\'s GitHub token`);
-  console.log(`[*] Getting ${timeFrame}\'s Days before`);
+  console.log(`[*] Getting ${daysBefore}\'s Days before`);
   console.log(`[*] Getting ${outputFormat}\'s Output Format`);
 
   //Calculate the date 30 days ago from today

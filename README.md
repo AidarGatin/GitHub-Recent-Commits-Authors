@@ -1,4 +1,4 @@
-# GitHub Actions Repository 
+# Get Recent Commit Authors GitHub Action
 GitHub Action to list repository recent commits authors emails"
 ### Description:
 The "GitHub Recent Commits Authors" action is designed to retrieve the recent commit authors of a GitHub repository. It provides a convenient way to fetch the email addresses of the authors who have made commits within a specified time frame. This action can be used to analyze the contributors' activity and gather insights about the development progress of a project.
@@ -6,7 +6,7 @@ The "GitHub Recent Commits Authors" action is designed to retrieve the recent co
 ### Usage Example:
 
 ```
-name: My Workflow
+name: Get Recent Commit Authors
 on:
   push:
     branches:
@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get Recent Commit Authors
-        uses: AidarGatin/github-recent-commits-authors@v1
+        uses: AidarGatin/github-recent-commits-authors@v1.0
         id: recent-commits
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # default ''
