@@ -8147,8 +8147,7 @@ try {
       auth: `${githubToken}`
     });
 
-    usersAPIData = octokit.request(`GET /repos/${owner_repo}/commits?since=${start_date}`, {
-      owner_repo: githubRepository,
+    usersAPIData = octokit.request(`GET /repos/${githubRepository}/commits?since=${start_date}`, {
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
       }
