@@ -21,12 +21,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get Recent Commit Authors
-        uses: AidarGatin/github-recent-commits-authors@v1.0
+        uses: AidarGatin/github-recent-commits-authors@v1.1
         id: recent-commits
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # default ''
-          days-before: '7' # default 30
-          output-format: 'raw' # default 'raw' supports only raw for now
+          github_repository: OWNER/REPOSITORY # default current repository 
+          github_token: ${{ secrets.GITHUB_TOKEN }} # default ''
+          days_before: '7' # default 30
+          output_format: 'raw' # default 'raw' supports only raw for now
 
       - name: Print Authors' Emails
         run: |

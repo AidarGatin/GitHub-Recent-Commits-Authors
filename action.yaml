@@ -6,22 +6,22 @@ branding:
   color: 'purple'
 
 inputs:
-  github-repository: 
+  github_repository: 
     description: 'GitHub Repository'
     required: false
     default: ${{ github.repository }}
 
-  github-token: 
+  github_token: 
     description: 'GitHub Token'
     required: false
     default: ''
 
-  days-before:
+  days_before:
     description: 'Days before now'
     required: false
     default: '30'
 
-  output-format:
+  output_format:
     description: 'Output format'
     required: false
     default: 'raw'
