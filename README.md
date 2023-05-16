@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get Recent Commit Authors
-        uses: marketplace-actions/github-recent-commits-authors@v1
+        uses: AidarGatin/github-recent-commits-authors@v1
         id: recent-commits
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # default ''
@@ -29,7 +29,8 @@ jobs:
           output-format: 'raw' # default 'raw' supports only raw for now
 
       - name: Print Authors' Emails
-        run: echo "Authors' Emails: ${{ steps.recent-commits.outputs.emails }}"
+        run: |
+          echo "Authors' Emails: ${{ steps.recent-commits.outputs.emails }}"
 ```
 In the above example, the workflow is triggered whenever a push occurs on the main branch. It contains a job named `get-commits` that runs on the latest version of Ubuntu. The steps of the job include checking out the repository using the `actions/checkout` action and retrieving the recent commit authors using the GitHub action.
 The action requires a `GitHub token`, which can be provided as a secret `GITHUB_TOKEN`. The `time-frame` input specifies the duration for which the recent commits are considered, and the `output-format` input determines the format of the output.
