@@ -48,17 +48,18 @@ try {
   let authorEmails = null;
   if (commitsAPIData != null) {
     //Sort inly unique emails
-   if (unique === 'true') {    
-    authorEmails = [...new Set(commitsAPIData.map((commit) => commit.commit.author.email))];
-   } else {
-    authorEmails = commitsAPIData.map((commit) => commit.commit.author.email);
-   }
+    if (unique === 'true') {
+      authorEmails = [...new Set(commitsAPIData.map((commit) => commit.commit.author.email))];
+    } else {
+      authorEmails = commitsAPIData.map((commit) => commit.commit.author.email);
+    }
 
   }
-  if (authorEmails == null && commitsAPIData != null) {
-    console.log(`No commits found for ${githubRepository}\'s GitHub repository`)
+
+  if (commitsAPIData.length === 0) {
+    console.log(`No commits found for ${githubRepository} repository for last ${daysBefore} days`)
   }
-  if (authorEmails != null && commitsAPIData != null) {
+  if (authorEmails != null && commitsAPIData.length > 0) {
     console.log(`[*] Found emails: ${authorEmails}`)
     // Output Format 
     if (outputFormat === 'json') {
@@ -74,7 +75,6 @@ try {
     core.setOutput("emails", authorEmails);
   }
   else {
-    console.log(`[*] Found emails: ${authorEmails}`)
     core.setOutput("emails", null);
   }
 } catch (error) {
