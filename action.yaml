@@ -20,11 +20,16 @@ inputs:
     description: 'Days before now'
     required: false
     default: '30'
+  
+  unique:
+    description: 'Sort out Unique authors emails'
+    required: false
+    default: 'true'
 
   output_format:
     description: 'Output format'
     required: false
-    default: 'raw'
+    default: 'json'
  
 outputs:
   emails: 

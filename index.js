@@ -5,7 +5,7 @@ function fetchCommits(githubRepository, start_date, githubToken) {
   const response = request("GET", `https://api.github.com/repos/${githubRepository}/commits?since=${start_date}`, {
     headers: {
       authorization: `token ${githubToken}`,
-      "User-Agent": "MyApp",
+      "User-Agent": "Application",
     },
   });
 
@@ -21,11 +21,13 @@ try {
   const githubRepository = core.getInput('github_repository');
   const githubToken = core.getInput('github_token');
   const daysBefore = core.getInput('days_before');
+  const unique = core.getInput('unique');
   const outputFormat = core.getInput('output_format');
 
   console.log(`[*] Getting ${githubRepository} as GitHub repository`);
   console.log(`[*] Getting ${githubToken} as GitHub token`);
   console.log(`[*] Getting ${daysBefore} as Days before`);
+  console.log(`[*] Getting ${unique} to Unique`);
   console.log(`[*] Getting ${outputFormat} as Output Format`);
 
   //Calculate the date 30 days ago from today
@@ -45,14 +47,35 @@ try {
   // Extract email list as a list in to authorEmails if the commitsAPIData API request  was accessed successfully
   let authorEmails = null;
   if (commitsAPIData != null) {
+    //Sort inly unique emails
+   if (unique === 'true') {    
+    authorEmails = [...new Set(commitsAPIData.map((commit) => commit.commit.author.email))];
+   } else {
     authorEmails = commitsAPIData.map((commit) => commit.commit.author.email);
+   }
+
   }
-  if (authorEmails == null) {
+  if (authorEmails == null && commitsAPIData != null) {
     console.log(`No commits found for ${githubRepository}\'s GitHub repository`)
+  }
+  if (authorEmails != null && commitsAPIData != null) {
+    console.log(`[*] Found emails: ${authorEmails}`)
+    // Output Format 
+    if (outputFormat === 'json') {
+      authorEmails = JSON.stringify(authorEmails);
+    } else if (outputFormat === 'string') {
+      authorEmails = authorEmails.join(', ');
+    } else if (outputFormat === 'list') {
+      authorEmails = authorEmails.join(' ');
+    } else {
+      console.log('Invalid output format specified.');
+      return;
+    }
+    core.setOutput("emails", authorEmails);
   }
   else {
     console.log(`[*] Found emails: ${authorEmails}`)
-    core.setOutput("emails", authorEmails);
+    core.setOutput("emails", null);
   }
 } catch (error) {
   core.setFailed(error.message);
