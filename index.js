@@ -30,10 +30,11 @@ try {
   console.log(`[*] Getting ${unique} to Unique`);
   console.log(`[*] Getting ${outputFormat} as Output Format`);
 
-  //Calculate the date 30 days ago from today
+  //Calculate the start date daysBefore today
   const today = new Date();
   today.setDate(today.getDate() - daysBefore);
-  const start_date = today.toISOString().split('T')[0];
+  today.setHours(0, 0, 0, 0);
+  const start_date = today.toISOString();
   console.log(`[*] Getting ${start_date} as Start Date`);
 
   let commitsAPIData = null;
