@@ -1,5 +1,5 @@
 # Get Recent Commit Authors GitHub Action
-GitHub Action to list repository recent commits all or unique authors emails"
+GitHub Action to list repository recent commits all or unique authors emails
 
 ### Description:
 The "GitHub Recent Commits Authors" action is designed to retrieve the recent commit all or unique authors of a GitHub repository. It provides a convenient way to fetch the email addresses of the authors who have made commits within a specified time frame. This action can be used to analyze the contributors' activity and gather insights about the development progress of a project.
