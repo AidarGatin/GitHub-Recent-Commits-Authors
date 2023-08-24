@@ -1,8 +1,8 @@
 const core = require('@actions/core');
 const request = require("sync-request");
 
-function fetchCommits(githubRepository, start_date, githubToken) {
-  const response = request("GET", `https://api.github.com/repos/${githubRepository}/commits?since=${start_date}`, {
+function fetchCommits(githubRepository, githubRepositoryBranch, start_date, githubToken) {
+  const response = request("GET", `https://api.github.com/repos/${githubRepository}/commits?sha=${githubRepositoryBranch}&since=${start_date}&per_page=100`, {
     headers: {
       authorization: `token ${githubToken}`,
       "User-Agent": "Application",
@@ -11,6 +11,7 @@ function fetchCommits(githubRepository, start_date, githubToken) {
 
   if (response.statusCode !== 200) {
     throw new Error(`Error fetching commits. Status code: ${response.statusCode}`);
+    
   }
 
   return JSON.parse(response.getBody("utf8"));
@@ -19,12 +20,14 @@ function fetchCommits(githubRepository, start_date, githubToken) {
 try {
   //inputs defined in action metadata file
   const githubRepository = core.getInput('github_repository');
+  const githubRepositoryBranch = core.getInput('github_repository_branch');
   const githubToken = core.getInput('github_token');
   const daysBefore = core.getInput('days_before');
   const unique = core.getInput('unique');
   const outputFormat = core.getInput('output_format');
 
   console.log(`[*] Getting ${githubRepository} as GitHub repository`);
+  console.log(`[*] Getting ${githubRepositoryBranch} as GitHub repository branch`);
   console.log(`[*] Getting ${githubToken} as GitHub token`);
   console.log(`[*] Getting ${daysBefore} as Days before`);
   console.log(`[*] Getting ${unique} to Unique`);
@@ -40,7 +43,7 @@ try {
   let commitsAPIData = null;
   // Attempt to fetch the commits from the GitHub API
   try {
-    commitsAPIData = fetchCommits(githubRepository, start_date, githubToken);
+    commitsAPIData = fetchCommits(githubRepository, githubRepositoryBranch, start_date, githubToken);
   } catch (error) {
     console.log("[!] " + error.message);
   }
@@ -81,4 +84,3 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
-

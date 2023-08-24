@@ -11,6 +11,11 @@ inputs:
     required: false
     default: ${{ github.repository }}
 
+  github_repository_branch: 
+    description: 'GitHub Repository Branch'
+    required: false
+    default: 'HEAD'
+
   github_token: 
     description: 'GitHub Token'
     required: false

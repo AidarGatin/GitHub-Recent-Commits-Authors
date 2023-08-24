@@ -7,18 +7,20 @@ The "GitHub Recent Commits Authors" action is designed to retrieve the recent co
 ### Implementation and Parameters
 ```
       - name: Get Recent Commit Authors
-        uses: AidarGatin/github-recent-commits-authors@v1.4
+        uses: AidarGatin/github-recent-commits-authors@v1.5
         id: recent-commits-authors
         with:
           github_repository: OWNER/REPOSITORY # default current repository 
           github_token: ${{ secrets.GH_TOKEN }} # default ''
+          github_repository_branch: 'main'
           days_before: '7' # default 30
-          unique: true # default 'true'
-          output_format: 'json' # default 'json'
+          unique: 'true' # default 'true'
+          output_format: 'list' # default 'json'
 ```
 
 The action requires parameters
-- `github_repository`: OWNER/REPOSITORY , default will be current repository 
+- `github_repository`: OWNER/REPOSITORY , default will be current repository
+- `github_repository_branch`: Branch(main,master .. prod ) , default will be current HEAD
 - `github_token`: ${{ secrets.GH_TOKEN }} # default ''
 - `days_before`: '7' # default 30
 - `unique`: true/false # default 'true' sorts out only unique emails if true
@@ -45,10 +47,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get Recent Commit Authors
-        uses: AidarGatin/github-recent-commits-authors@v1.1
+        uses: AidarGatin/github-recent-commits-authors@v1.5
         id: recent-commits-authors
         with:
           github_repository: OWNER/REPOSITORY # default current repository 
+          github_repository_branch: 'main'
           github_token: ${{ secrets.GH_TOKEN }} # default ''
           days_before: '7' # default 30
           unique: 'true' # default 'true'
